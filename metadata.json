@@ -1,0 +1,5 @@
+{
+  "name": "Font Finder AI",
+  "description": "Upload images of a font to identify it and find links to font stores using AI.",
+  "requestFramePermissions": []
+}
