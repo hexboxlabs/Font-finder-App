@@ -32,12 +32,24 @@ export const analyzeFontImages = async (images: File[]): Promise<FontAnalysisRes
 
   const imageParts = await Promise.all(images.map(fileToGenerativePart));
 
-  const prompt = `Analyze the following images which all feature the same font. Your task is to:
-1.  Identify the name of the font. If it's a very common font, be specific (e.g., "Helvetica Neue" instead of just "Helvetica").
-2.  Provide a brief, one or two-sentence description of its key characteristics (e.g., "A geometric sans-serif with a clean and modern appearance.").
-3.  Provide a list of up to 3 URLs where this font can be downloaded or purchased. Prioritize official sources like Google Fonts, Adobe Fonts, MyFonts, or the foundry's own website.
+  const prompt = `You are a typography expert. Your task is to meticulously analyze the following images, which all showcase the same font, and provide a detailed identification.
 
-Format your response as a single, valid JSON object matching the provided schema. Do not include any markdown formatting or the json code block syntax.`;
+Follow these steps for your analysis:
+1.  **Examine Font Characteristics:** Look closely at the letterforms. Pay attention to details like:
+    *   **Serifs:** Are they present? Are they bracketed, slab, or hairline?
+    *   **X-height:** Is it high or low?
+    *   **Contrast:** Is there a significant difference between thick and thin strokes?
+    *   **Glyph Shapes:** Note any unique characters (e.g., the shape of the 'g', the tail of the 'Q', the dot on the 'i').
+    *   **Overall Feel:** Is it geometric, humanist, grotesque, modern?
+
+2.  **Identify the Font:** Based on your detailed analysis, identify the specific name of the font. Be as precise as possible (e.g., "Roboto Slab" instead of just "a slab serif"). If it's a very common font, provide the specific variant if discernible (e.g., "Helvetica Neue Light").
+
+3.  **Describe the Font:** Provide a concise, one or two-sentence description summarizing its key characteristics and typical usage.
+
+4.  **Find Font Sources:** Provide a list of up to 3 URLs where this font can be reliably downloaded or purchased. Prioritize official foundries, major distributors like Google Fonts, Adobe Fonts, or MyFonts.
+
+**Output Format:**
+Your final output must be a single, valid JSON object matching the provided schema. Do not include any markdown formatting, code block syntax, or extraneous text.`;
 
   const contents = {
       parts: [
